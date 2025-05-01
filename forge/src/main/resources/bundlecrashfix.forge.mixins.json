@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "rs.onako2.bundlecrashfix.mixin",
+  "compatibilityLevel": "JAVA_18",
+  "mixins": [],
+  "client": [
+    "MixinTitleScreen"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
