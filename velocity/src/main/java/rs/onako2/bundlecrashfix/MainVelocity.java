@@ -15,10 +15,10 @@ import org.slf4j.Logger;
 import java.nio.file.Path;
 
 @Plugin(
-        id = "redirect-players",
-        name = "redirect-players",
+        id = "bundlecrashfix",
+        name = "BundleCrashFix",
         version = BuildConstants.VERSION,
-        description = "Redirect players when the Velocity server shuts down",
+        description = "Prevent bad people from crashing your server with the Bundle crashing method",
         authors = {"Onako2"}
 )
 public class MainVelocity {
