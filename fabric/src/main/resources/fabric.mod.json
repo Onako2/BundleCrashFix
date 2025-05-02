@@ -8,8 +8,17 @@
     "${mod_author}"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://modrinth.com/mod/bundle-crash-fix",
+    "sources": "https://github.com/Onako2/BundleCrashFix",
+    "issues": "https://github.com/Onako2/rplacedownloader/issues"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/NGw5ZGKgRt"
+      },
+      "update_checker": true
+    }
   },
   "license": "${license}",
   "icon": "${mod_id}.png",
@@ -23,7 +32,7 @@
     "${mod_id}.mixins.json"
   ],
   "depends": {
-    "minecraft": "${minecraft_version}",
+    "minecraft": "<1.21.5",
     "java": ">=${java_version}"
   }
 }
