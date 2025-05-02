@@ -48,4 +48,5 @@ rootProject.name = 'BundleCrashFix'
 include('common')
 include('fabric')
 include('neoforge')
+include('spigot')
 //include('forge')

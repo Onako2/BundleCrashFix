@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id "xyz.jpenilla.run-paper" version "2.3.0"
+    id "com.gradleup.shadow" version "8.3.6"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
+        url = "https://repo.codemc.io/repository/maven-releases/"
+    }
+}
+
+dependencies {
+    compileOnly "org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT"
+    implementation "com.github.retrooper:packetevents-spigot:2.7.0"
+}
+
+def targetJavaVersion = 21
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
+    if (targetJavaVersion >= 21 || JavaVersion.current().isJava10Compatible()) {
+        options.release.set(targetJavaVersion)
+    }
+}
+
+tasks {
+    runServer {
+        minecraftVersion("1.21.4")
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
+
+tasks.shadowJar {
+    archiveClassifier.set('all')
+    relocate 'com.github.retrooper.packetevents', 'rs.onako2.bundlecrashfix.retrooper.packetevents'
+    minimize()
+}
+
+tasks.build {
+    dependsOn tasks.shadowJar
+}

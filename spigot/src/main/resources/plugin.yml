@@ -1,0 +1,9 @@
+name: bundlecrashfix
+version: '${version}'
+main: rs.onako2.bundlecrashfix.MainSpigot
+api-version: '1.21'
+prefix: bcf
+load: POSTWORLD
+authors: [ Onako2 ]
+description: Prevent bad people from crashing your server with the Bundle crashing method
+website: https://modrinth.com/mod/bundle-crash-fix
