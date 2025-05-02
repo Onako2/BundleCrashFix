@@ -54,8 +54,9 @@ processResources {
 
 tasks.shadowJar {
     archiveClassifier.set('all')
-    relocate 'com.github.retrooper.packetevents', 'rs.onako2.bundlecrashfix.retrooper.packetevents'
+    archiveBaseName.set("bundlecrashfix-spigot")
     minimize()
+    relocate 'com.github.retrooper.packetevents', 'rs.onako2.bundlecrashfix.retrooper.packetevents'
 }
 
 tasks.build {

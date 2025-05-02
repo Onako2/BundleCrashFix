@@ -1,0 +1,77 @@
+plugins {
+    id "java"
+    id "eclipse"
+    id "xyz.jpenilla.run-velocity" version "2.3.1"
+    id "com.gradleup.shadow" version "8.3.6"
+}
+
+repositories {
+    maven {
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+    maven {
+        url = "https://repo.codemc.io/repository/maven-releases/"
+    }
+}
+
+dependencies {
+    compileOnly "com.velocitypowered:velocity-api:3.4.0-SNAPSHOT"
+    annotationProcessor "com.velocitypowered:velocity-api:3.4.0-SNAPSHOT"
+    implementation "com.github.retrooper:packetevents-velocity:2.7.0"
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release.set(targetJavaVersion)
+    }
+}
+
+def templateSource = file('src/main/templates')
+def templateDest = layout.buildDirectory.dir('generated/sources/templates')
+def generateTemplates = tasks.register('generateTemplates', Copy) { task ->
+    def props = [
+            'version': project.version
+    ]
+    task.inputs.properties props
+
+    task.from templateSource
+    task.into templateDest
+    task.expand props
+}
+
+sourceSets.main.java.srcDir(generateTemplates.map { it.outputs })
+
+//rootProject.idea.project.settings.taskTriggers.afterSync generateTemplates
+project.eclipse.synchronizationTasks(generateTemplates)
+
+tasks {
+    runVelocity {
+        // Configure the Velocity version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        velocityVersion("3.4.0-SNAPSHOT")
+    }
+}
+
+tasks.shadowJar {
+    archiveClassifier.set('all')
+    archiveBaseName.set("bundlecrashfix-velocity")
+    minimize()
+    relocate 'com.github.retrooper.packetevents', 'rs.onako2.bundlecrashfix.retrooper.packetevents'
+}
+
+tasks.build {
+    dependsOn tasks.shadowJar
+}
