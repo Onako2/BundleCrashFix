@@ -1,4 +1,4 @@
-## Licensing Notice
+## Onako2's mixed BundleCrashFix licence
 
 This project contains code under multiple licenses:
 
