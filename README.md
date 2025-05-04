@@ -12,6 +12,7 @@ Protect yourself from nasty cheaters trying to crash the server with Bundles!
 - Spigot
 - Paper
 - Purpur
+- Folia
 - Bungeecord
 - Waterfall
 - Velocity
