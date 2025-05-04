@@ -2,14 +2,14 @@ package rs.onako2.bundlecrashfix;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
-import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
-import org.bukkit.plugin.java.JavaPlugin;
+import io.github.retrooper.packetevents.bungee.factory.BungeePacketEventsBuilder;
+import net.md_5.bungee.api.plugin.Plugin;
 
-public class MainSpigot extends JavaPlugin {
+public class MainBungee extends Plugin {
 
     @Override
     public void onLoad() {
-        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.setAPI(BungeePacketEventsBuilder.build(this));
         PacketEvents.getAPI().load();
         PacketEvents.getAPI().getEventManager().registerListener(
                 new BundleSelectPacketListener(), PacketListenerPriority.NORMAL);

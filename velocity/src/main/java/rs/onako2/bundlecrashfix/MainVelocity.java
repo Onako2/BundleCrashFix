@@ -39,6 +39,7 @@ public class MainVelocity {
         PacketEvents.getAPI().getEventManager().registerListener(
                 new BundleSelectPacketListener(), PacketListenerPriority.NORMAL);
         PacketEvents.getAPI().init();
+        Constants.LOG.info("Your Minecraft is now protected against the Bundle crash exploit!");
     }
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
